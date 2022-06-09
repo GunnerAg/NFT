@@ -8,7 +8,7 @@
 # 1: Añadir MNEMONIC, PRIVATE_KEY y PUBLIC_KEY a variables de entrono (.env).
 ### Añadir los wallets al array accounts en mint.js o mint2.js.
 
-### PARA Token1.sol
+### Solo para Token2.sol
 **añadir uris de cada token en el array tokenUris de mint2.js. Los dos arrays deben tener el mismo tamaño o algun NFT no tendra metadatos, añadir una funcion para cambiarlos a posteriori es posible pero no es recomendable.**
 
 # 2: Cambiar el nombre de el/los contrato/s de Test1.sol/Test2.sol y el nombre y symbolo en el constructor.
