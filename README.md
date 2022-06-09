@@ -1,7 +1,7 @@
 # TODO 1: Añadir funcion para mint de admins evento.
 # TODO 2: Añadir al loop la funcion de checkeo de wallets que han recibido el token para los asistentes al evento (ahora mismo lo valida una vez al arrancar script).
 
-## IMPORTANTE: Hay dos tokens, unos con uri storage y otro no. Si los uri tienen una parte común usar token Test1.sol, si cada uri es completamente diferente usar Test2.sol.
+## IMPORTANTE: Hay dos tokens, uno con uri storage y otro no. Si los uri tienen una parte común usar token Test1.sol, si cada uri es completamente diferente usar Test2.sol.
 
 # 0: Instalar dependencias con "npm install".
 
@@ -9,8 +9,7 @@
 ### Añadir los wallets al array accounts en mint.js o mint2.js.
 
 ### PARA Token1.sol
-**añadir uris de cada token en el array tokenUris de mint2.js**
-**IMPORTANTE, los dos arrays deben tener el mismo tamaño o algun NFT no tendra metadatos, añadir una funcion para cambiarlos a posteriori es posible pero no es recomendable.**
+**añadir uris de cada token en el array tokenUris de mint2.js. Los dos arrays deben tener el mismo tamaño o algun NFT no tendra metadatos, añadir una funcion para cambiarlos a posteriori es posible pero no es recomendable.**
 
 # 2: Cambiar el nombre de el/los contrato/s de Test1.sol/Test2.sol y el nombre y symbolo en el constructor.
 **modificar nombre del contrato tambien en migrations/1_deploy_contract.js y smart-contracts/index.ts**
