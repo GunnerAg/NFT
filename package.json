@@ -1,7 +1,7 @@
 {
   "name": "NFT-Deployer",
   "version": "1.0.0",
-  "description": "Deployer for WickeDrive NFT Game Contract.",
+  "description": "Deployer + Mint loop script",
   "main": "./src/index.ts",
   "scripts": {
     "start": "nodemon src/index.ts",
