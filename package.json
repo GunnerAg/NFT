@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon src/index.ts",
     "deploy:development": "npx truffle migrate --network development",
-    "deploy:testnet": "npx truffle migrate --network matic",
+    "deploy:testnet": "npx truffle migrate --network rinkeby",
     "deploy:production": "npx truffle migrate --network production",
     "lint": "npx eslint . --ext .ts -f table",
     "lint:fix": "npx eslint . --ext .ts -f table --fix"
