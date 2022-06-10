@@ -5,7 +5,7 @@
 
 # 0: Instalar dependencias con "npm install".
 
-# 1: Añadir MNEMONIC, PRIVATE_KEY y PUBLIC_KEY a variables de entrono (.env).
+# 1: Cambiar nombre .example.env por .env y Añadir los valores de MNEMONIC, PRIVATE_KEY y PUBLIC_KEY.
 ### Añadir los wallets al array accounts en mint.js o mint2.js.
 
 ### Solo para Token2.sol
