@@ -43,11 +43,11 @@ const run = async () => {
       toBlock: "latest",
     })
     .then(function (events) {
-      events.forEach((e) => {
-        const recipient = e.returnValues.to;
-        console.log("This has token", recipient);
+      for(let i = 0; i < events.length; i++) {
+        const recipient = events[i].returnValues.to;
+        console.log("⛔ This address has a token", recipient);
         !hasToken.includes(recipient) && hasToken.push(recipient);
-      });
+      };
     });
 
   const validAddresses = accounts.filter((acc) => {
@@ -55,18 +55,18 @@ const run = async () => {
   });
 
   console.log('original accounts', accounts);
-  console.log("hasToken", hasToken);
-  console.log("validAddresses", validAddresses);
-  // Sleep()
+  console.log("⛔ hasToken", hasToken);
+  console.log("✅ validAddresses", validAddresses);
+
   if(validAddresses.length===0){
-    console.log('All accounts have tokens');
+    console.log("⚠️ All accounts have tokens");
   }
-  await new Promise((r) => setTimeout(r, 1000 * 5));
+  await new Promise((r) => setTimeout(r, 1000 * 2));
 
   // mint tokens
   for (let i = 0; i < validAddresses.length; i++) {
     // Sleep()
-    console.log("Minting to: " + validAddresses[i]);
+    console.log("⌛ Minting to: " + validAddresses[i]);
     //await new Promise((r) => setTimeout(r, 1000 * 10));
     const price = await web3.eth.getGasPrice();
     const tx = {
@@ -87,22 +87,44 @@ const run = async () => {
           );
           sentTx.on("receipt", (receipt) => {
             console.table(
-              "Transaction receipt: " + JSON.stringify(receipt, null, 4)
+              "✅ Transaction receipt: " + JSON.stringify(receipt, null, 4)
             );
             resolve();
           });
           sentTx.on("error", (err) => {
-            console.log("Transaction error: " + err);
+            console.log("❌ Transaction error: " + err);
           });
         })
         .catch((err) => {
-          console.log("Signing error: " + err);
+          console.log("❌ Signing error: " + err);
           reject();
         });
     });
-    console.log("Succesfully minted to: " + validAddresses[i]);
+    console.log("✅ Succesfully minted to: " + validAddresses[i]);
     await new Promise((r) => setTimeout(r, 1000 * 2));
-    console.log("There are: " + ( (validAddresses.length - 1) - i) + " " + "itereations left");
+
+    // CHECK FOR TOKEN URIS
+    await new Promise(async (resolve, reject) => {
+      await contract.methods
+        .tokenURI(i)
+        .call({ from: process.env.PUBLIC_KEY })
+        .then((result) => {
+          console.log("✅ Token URI for ID " + i + ":" + result);
+          resolve();
+        })
+        .catch((err) => {
+          console.log("❌ Error getting token uri: " + err);
+          reject();
+        });
+    });
+
+    await new Promise((r) => setTimeout(r, 1000 * 2));
+    console.log(
+      "🔁 There are: " +
+        (validAddresses.length - 1 - i) +
+        " " +
+        "itereations left"
+    );
   }
   console.log("Finished minting");
 };
