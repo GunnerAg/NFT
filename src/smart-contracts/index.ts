@@ -1,4 +1,4 @@
-import contractJson from './build/Test.json'
+import contractJson from './build/Test2.json'
 
 const networkId = Object.keys(contractJson.networks)[0]
 console.log('NETWORK ID  ----->>>', networkId)

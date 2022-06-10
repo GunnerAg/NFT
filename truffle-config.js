@@ -24,7 +24,7 @@ module.exports = {
       network_id: 5777,
       gas: 4612388,
     },
-    testnet: {
+    rinkeby: {
       provider: () =>
         new HDWalletProvider(
           process.env.MNEMONIC,

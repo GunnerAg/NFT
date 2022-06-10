@@ -100,9 +100,9 @@ const run = async () => {
           reject();
         });
     });
-    console.log("Minted to: " + validAddresses[i]);
+    console.log("Succesfully minted to: " + validAddresses[i]);
     await new Promise((r) => setTimeout(r, 1000 * 2));
-    console.log("There are: " + validAddresses.length-i + "itereations left");
+    console.log("There are: " + ( (validAddresses.length - 1) - i) + " " + "itereations left");
   }
   console.log("Finished minting");
 };

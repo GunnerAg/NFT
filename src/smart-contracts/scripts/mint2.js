@@ -1,4 +1,4 @@
-const contractJson = require("../build/Test.json");
+const contractJson = require("../build/Test2.json");
 const dotenv = require("dotenv");
 const prompt = require("prompt-sync")({ sigint: true });
 
@@ -54,11 +54,11 @@ const run = async () => {
       toBlock: "latest",
     })
     .then(function (events) {
-      events.forEach((e) => {
-        const recipient = e.returnValues.to;
+      for (let i = 0; i < events.length; i++) {
+        const recipient = events[i].returnValues.to;
         console.log("This has token", recipient);
         !hasToken.includes(recipient) && hasToken.push(recipient);
-      });
+      }
     });
 
   const validAddresses = accounts.filter((acc) => {
@@ -72,24 +72,28 @@ const run = async () => {
   if (validAddresses.length === 0) {
     console.log("All accounts have tokens");
   }
+
   if (validAddresses.length < tokenUris.length) {
-    console.log("CUIDADO! El array de address que no tienen tokens es menor que el de tokenUris");
+    console.log(
+      "CUIDADO! El array de address que no tienen tokens es menor que el de tokenUris"
+    );
     const keepOn = await prompt("Quieres seguir la ejecución? Y/N");
     if (keepOn === "N" || "n") {
       process.exit();
     }
   }
   if (validAddresses.length > tokenUris.length) {
-    console.log("TERMINANDO EL PROCESO! El array de address que no tienen tokens es mayor que el de tokenUris");
+    console.log(
+      "TERMINANDO EL PROCESO! El array de address que no tienen tokens es mayor que el de tokenUris"
+    );
     process.exit();
   }
   await new Promise((r) => setTimeout(r, 1000 * 5));
 
   // mint tokens
   for (let i = 0; i < validAddresses.length; i++) {
-    // Sleep()
+    
     console.log("Minting to: " + validAddresses[i]);
-    //await new Promise((r) => setTimeout(r, 1000 * 10));
     const price = await web3.eth.getGasPrice();
     const tx = {
       from: process.env.PUBLIC_KEY,
@@ -100,8 +104,7 @@ const run = async () => {
         .safeMint(validAddresses[i], tokenUris[i])
         .encodeABI(),
     };
-    // Sleep()
-    // await new Promise((r) => setTimeout(r, 1000 * 60));
+
     await new Promise(async (resolve, reject) => {
       await web3.eth.accounts
         .signTransaction(tx, process.env.PRIVATE_KEY)
@@ -124,9 +127,26 @@ const run = async () => {
           reject();
         });
     });
-    console.log("Minted to: " + validAddresses[i]);
+    console.log("Successfully minted to: " + validAddresses[i]);
     await new Promise((r) => setTimeout(r, 1000 * 2));
-    console.log("There are: " + validAddresses.length - i + "itereations left");
+    console.log(
+      "There are: " + (validAddresses.length - 1 - i) + " " + "itereations left"
+    );
+
+    // CHECK FOR TOKEN URIS
+    await new Promise(async (resolve, reject) => {
+      await contract.methods
+        .tokenURI(i)
+        .call({ from: process.env.PUBLIC_KEY })
+        .then((result)=>{
+          console.log("TOKEN URI OF NFT WITH ID:" + i + " IS:" + result);
+          resolve();
+        })
+        .catch((err)=>{
+          console.log('Error getting token uri: ' + err);
+          reject();
+        });
+    });
   }
   console.log("Finished minting");
 };
