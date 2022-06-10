@@ -68,7 +68,6 @@ const run = async () => {
   console.log("original accounts", accounts);
   console.log("hasToken", hasToken);
   console.log("validAddresses", validAddresses);
-  // Sleep()
   if (validAddresses.length === 0) {
     console.log("All accounts have tokens");
   }
@@ -77,7 +76,7 @@ const run = async () => {
     console.log(
       "CUIDADO! El array de address que no tienen tokens es menor que el de tokenUris"
     );
-    const keepOn = await prompt("Quieres seguir la ejecución? Y/N");
+    const keepOn = await prompt("Quieres seguir la ejecución? Y/N" + " ");
     if (keepOn === "N" || "n") {
       process.exit();
     }
