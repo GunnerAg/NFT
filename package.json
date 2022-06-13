@@ -8,6 +8,9 @@
     "deploy:development": "npx truffle migrate --network development",
     "deploy:testnet": "npx truffle migrate --network rinkeby",
     "deploy:production": "npx truffle migrate --network production",
+    "scripts:mint": "node src/smart-contracts/scripts/mint.js",
+    "scripts:mint2": "node src/smart-contracts/scripts/mint2.js",
+    "scripts:premint": "node src/smart-contracts/scripts/premint.js",
     "lint": "npx eslint . --ext .ts -f table",
     "lint:fix": "npx eslint . --ext .ts -f table --fix"
   },
